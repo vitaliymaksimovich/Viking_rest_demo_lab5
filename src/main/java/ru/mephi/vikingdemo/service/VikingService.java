@@ -42,7 +42,7 @@ public class VikingService {
     public void deleteById(int id) {
         vikingStorage.deleteById(id);
     }
-    
+
     public List<Viking> bulkGenerateVikings(int count) {
         Supplier<Viking> vikingSupplier = () -> vikingFactory.createRandomViking();
 
