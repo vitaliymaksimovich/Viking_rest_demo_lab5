@@ -29,7 +29,6 @@ public class VikingDemoApplication {
             vikingListener.setGui(frame);
             frame.setVisible(true);
 
-            // Новая форма для лабораторной работы 5
             VikingLambdaFrame lambdaFrame = new VikingLambdaFrame(lambdaService, vikingService, vikingListener);
             lambdaFrame.setVisible(true);
         });

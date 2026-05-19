@@ -54,13 +54,11 @@ public class VikingLambdaService {
 
 
     public long countWithOneOrTwoAxes() {
-        // Лямбда: подсчитать количество топоров у викинга
         java.util.function.ToLongFunction<Viking> axeCounter = v ->
                 v.equipment().stream()
                         .filter(e -> e.name().toLowerCase().contains("axe"))
                         .count();
 
-        // Предикат: настоящий викинг (есть борода) и имеет 1 или 2 топора
         Predicate<Viking> filter = v -> {
             boolean hasBeard = v.beardStyle() != BeardStyle.CLEAN_SHAVEN;
             long axes = axeCounter.applyAsLong(v);
@@ -81,7 +79,6 @@ public class VikingLambdaService {
             return Optional.empty();
         }
 
-        // Лямбда-выбор случайного элемента
         java.util.function.Supplier<Viking> randomPicker =
                 () -> tallVikings.get(new Random().nextInt(tallVikings.size()));
 
@@ -114,12 +111,10 @@ public class VikingLambdaService {
 
 
     public OptionalInt findMaxId() {
-        // Собираем ID в явный массив Integer[]
         Integer[] ids = vikingService.findAll().stream()
                 .map(Viking::id)
                 .toArray(Integer[]::new);
 
-        // Через лямбду ищем максимум
         return Arrays.stream(ids)
                 .mapToInt(Integer::intValue)
                 .max();
@@ -129,19 +124,17 @@ public class VikingLambdaService {
     public List<Viking> getVikingsWithEvenIds() {
         List<Viking> allVikings = vikingService.findAll();
 
-        // Собираем все ID в явный массив Integer[]
+
         Integer[] ids = allVikings.stream()
                 .map(Viking::id)
                 .toArray(Integer[]::new);
 
-        // Через лямбду фильтруем чётные ID
         Predicate<Integer> isEven = id -> id % 2 == 0;
 
         Set<Integer> evenIdSet = Arrays.stream(ids)
                 .filter(isEven::test)
                 .collect(Collectors.toSet());
 
-        // Ищем викингов по отобранным ID
         return allVikings.stream()
                 .filter(v -> evenIdSet.contains(v.id()))
                 .collect(Collectors.toList());
